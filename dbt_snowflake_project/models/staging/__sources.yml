@@ -1,7 +1,7 @@
 version: 2
 sources:
 - name: sleekdata
-  description: 'Orders sale data'
+  description: 'Database with sleekmart'
   database: SLEEKMART_OMS
   schema: L1_LANDING
   tables:
