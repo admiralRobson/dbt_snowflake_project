@@ -1,0 +1,18 @@
+dbt_snowflake_project:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      role: ACCOUNTADMIN
+      warehouse: COMPUTE_WH
+      database: SLEEKMART_OMS
+      schema: L1_LANDING
+      threads: 2
+    prod:
+      type: snowflake
+      role: ACCOUNTADMIN
+      warehouse: DWH_WH
+      database: SLEEKMART_OMS
+      schema: L1_LANDING
+      threads: 2
+  

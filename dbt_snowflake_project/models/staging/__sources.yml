@@ -1,0 +1,120 @@
+version: 2
+sources:
+- name: sleekdata
+  description: 'Database with sleekmart'
+  database: SLEEKMART_OMS
+  schema: L1_LANDING
+  tables:
+    - name: CUSTOMERS
+      description: 'Table with customers'
+      columns: 
+        - name: CUSTOMERID
+          description: "Unique identifier for each customer (Primary Key)."
+          data_tests:
+            - unique
+            - not_null
+        - name: FIRSTNAME
+          description: "Customer's first name."
+        - name: LASTNAME
+          description: "Customer's last name."
+        - name: EMAIL
+          description: "Primary contact email address for the customer."
+          data_tests:
+            - not_null
+        - name: PHONE
+          description: "Customer contact phone number (may include extension)."
+        - name: ADDRESS
+          description: "Street address line for the customer residence or business."
+        - name: CITY
+          description: "City of residence."
+        - name: STATE
+          description: "State or province code (e.g., TX)."
+        - name: ZIPCODE
+          description: "Postal / ZIP code."
+        - name: UPDATED_AT
+          description: "Timestamp indicating when the record was last modified in the source system."
+          data_tests:
+            - not_null
+    - name: DATES
+      description: "Table with dates"
+    - name: EMPLOYEES
+      description: "Table with data from employee"
+    - name: PRODUCTS
+      description: "Table with data from products"
+    - name: SUPPLIERS
+      description: "Table with data from suppliers"
+    - name: STORES
+      description: "Table with data from stores"
+    - name: ORDERITEMS
+      description: "Raw line item details for each order ingested into the L1 Landing zone."
+      columns:
+        - name: ORDERID
+          description: "Foreign key referencing the parent order."
+          data_tests:
+            - not_null
+            - relationships:
+                to: source('sleekdata', 'ORDERS')
+                field: ORDERID
+        - name: ORDERITEMID
+          description: "Line item sequence number within a specific order."
+          data_tests:
+            - not_null
+        - name: PRODUCTID
+          description: "Identifier of the product purchased."
+          data_tests:
+            - not_null
+        - name: QUANTITY
+          description: "Number of product units purchased."
+          data_tests:
+            - not_null
+        - name: UNITPRICE
+          description: "Price per individual unit at the time of purchase."
+          data_tests:
+            - not_null
+        - name: UPDATED_AT
+          description: "Timestamp indicating when the order item record was last modified in the source system."
+          data_tests:
+            - not_null
+            
+    - name: ORDERS
+      description: "Table with data from orders"
+      columns:
+        - name: ORDERID
+          description: "Unique identifier for each order (Primary Key)."
+          data_tests:
+            - unique
+            - not_null
+        - name: ORDERDATE
+          description: "Date when the order was placed."
+          data_tests:
+            - not_null
+        - name: CUSTOMERID
+          description: "Foreign key referencing the customer who placed the order."
+          data_tests:
+            - not_null
+            - relationships:
+                to: source('sleekdata', 'CUSTOMERS')
+                field: CUSTOMERID
+        - name: EMPLOYEEID
+          description: "Identifier of the employee who processed or assisted with the order."
+          data_tests:
+            - not_null
+            - relationships:
+                to: source('sleekdata','EMPLOYEES')
+                field: EMPLOYEEID
+        - name: STOREID
+          description: "Identifier of the physical store or digital fulfillment center."
+          data_tests:
+            - not_null
+            - relationships:
+                to: source('sleekdata', 'STORES')
+                field: STOREID
+        - name: STATUS
+          description: "Current status code of the order (e.g., '02' for processing/shipped)."
+          data_tests:
+            - not_null
+        - name: UPDATED_AT
+          description: "Timestamp indicating when the order record was last modified in the source system."
+          data_tests:
+            - not_null
+        
