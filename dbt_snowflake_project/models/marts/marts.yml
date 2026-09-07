@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: fct_orders
+    description: "Fact table with orders, needed to create to get info in data mart"
+    columns:
+      - name: order_id
+        description: "Column with order_id"
+        data_tests:
+          - not_null
+      - name: customer_id
+        description: "Foreign key to table customers"
+        data_tests:
+          - not_null
+      - name: order_line_id
+        description: "Primary key, unique business key (order_id '|' + line_id)"
+        data_tests:
+          - unique
+          - not_null
+      - name: product_id
+        description: "Foreign key to table products"
+        data_tests:
+          - not_null
+  
