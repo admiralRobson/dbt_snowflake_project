@@ -45,6 +45,12 @@ sources:
       description: "Table with data from suppliers"
     - name: STORES
       description: "Table with data from stores"
+      columns:
+        - name: STOREID
+          description: "Business key to check"
+          data_tests:
+            - unique
+            - not_null
     - name: ORDERITEMS
       description: "Raw line item details for each order ingested into the L1 Landing zone."
       columns:

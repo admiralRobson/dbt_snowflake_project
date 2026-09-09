@@ -21,4 +21,24 @@ models:
         description: "Foreign key to table products"
         data_tests:
           - not_null
-  
+  - name: dim_product 
+    description: "Dimension table for product"
+    columns:
+      - name: product_id
+        description: "Business key for primary key"
+        data_tests:
+          - not_null
+      - name: retail_price
+        description: "Retail price of product"
+        data_tests:
+          - not_null
+          - not_negative:
+              min_value: 0
+          - is_greater_than:
+              lesser_column_name: supplier_price
+      - name: supplier_price
+        description: "Supplier price of product"
+        data_tests:
+          - not_null
+          - not_negative:
+              min_value: 0

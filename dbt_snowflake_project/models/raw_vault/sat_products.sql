@@ -10,8 +10,8 @@ WITH source_data AS (
         product_hash_diff AS hash_diff,
         name as product_name,
         category as product_category,
-        RETAILPRICE as retail_price, 
-        SUPPLIERPRICE as supplier_price,
+        coalesce(RETAILPRICE,0) as retail_price, 
+        coalesce(SUPPLIERPRICE,0) as supplier_price,
         load_ts,
         record_source
     FROM {{ ref('stg_products') }}
